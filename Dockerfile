@@ -2,4 +2,4 @@ FROM node
 
 ADD . /dispatcher
 
-ENTRYPOINT ["node", "/dispatcher/dispatch.js"]
+ENTRYPOINT ["node", "/dispatcher/index.js"]
