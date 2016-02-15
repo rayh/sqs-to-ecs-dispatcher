@@ -3,6 +3,8 @@ var Consumer = require('sqs-consumer');
 var AWS = require('aws-sdk');
 var ecs = new AWS.ECS();
 
+AWS.config.update({region: process.env["AWS_DEFAULT_REGION"]||'us-west-1'});
+
 var app = Consumer.create({
   queueUrl: queueUrl,
   handleMessage: function (message, done) {
