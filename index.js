@@ -1,9 +1,9 @@
 var queueUrl = process.env["QUEUE_URL"];
 var Consumer = require('sqs-consumer');
 var AWS = require('aws-sdk');
-var ecs = new AWS.ECS();
-
 AWS.config.update({region: process.env["AWS_DEFAULT_REGION"]||'us-west-1'});
+
+var ecs = new AWS.ECS();
 
 var app = Consumer.create({
   queueUrl: queueUrl,
@@ -14,7 +14,7 @@ var app = Consumer.create({
       if(err) {
         console.error("Unable to dispatch job because", err);
       } else {
-        console.debug("ECS said", data);
+        console.log("ECS said", data);
       }
       done(err, data);
     });
