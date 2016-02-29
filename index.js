@@ -2,7 +2,7 @@ var queueUrl = process.env["QUEUE_URL"];
 var Consumer = require('sqs-consumer');
 var AWS = require('aws-sdk');
 
-AWS.config.update({region: process.env["AWS_DEFAULT_REGION"]||'us-west-1'});
+AWS.config.update({region: process.env["AWS_DEFAULT_REGION"]||'us-west-2'});
 
 var ecs = new AWS.ECS();
 
@@ -12,6 +12,21 @@ var app = Consumer.create({
   handleMessage: function (message, done) {
     console.log("Received", message)
     var jobSpec = JSON.parse(message.Body);
+    jobSpec.overrides.containerOverrides.forEach(function(o) {
+      o.environment.push({
+        name: 'SQS_QUEUE_URL',
+        vaue: queueUrl
+      })
+      o.environment.push({
+        name: 'SQS_RECEIPT_HANDLE',
+        vaue: message.ReceiptHandle
+      })
+      o.environment.push({
+        name: 'SQS_MESSAGE_HASH',
+        vaue: message.MD5OfBody
+      })
+    })
+
     ecs.runTask(jobSpec, function(err, data) {
       if(err) {
         console.error("Unable to dispatch job because", err);
