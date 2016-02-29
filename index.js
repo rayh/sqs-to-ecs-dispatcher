@@ -15,15 +15,15 @@ var app = Consumer.create({
     jobSpec.overrides.containerOverrides.forEach(function(o) {
       o.environment = o.environment||[];
       o.environment.push({
-        name: 'SQS_QUEUE_URL',
+        name: 'JOB_SQS_QUEUE_URL',
         value: queueUrl
       })
       o.environment.push({
-        name: 'SQS_RECEIPT_HANDLE',
+        name: 'JOB_SQS_RECEIPT_HANDLE',
         value: message.ReceiptHandle
       })
       o.environment.push({
-        name: 'SQS_MESSAGE_HASH',
+        name: 'JOB_SQS_MESSAGE_HASH',
         value: message.MD5OfBody
       })
     })
