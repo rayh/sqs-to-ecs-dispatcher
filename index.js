@@ -16,15 +16,15 @@ var app = Consumer.create({
       o.environment = o.environment||[];
       o.environment.push({
         name: 'SQS_QUEUE_URL',
-        vaue: queueUrl
+        value: queueUrl
       })
       o.environment.push({
         name: 'SQS_RECEIPT_HANDLE',
-        vaue: message.ReceiptHandle
+        value: message.ReceiptHandle
       })
       o.environment.push({
         name: 'SQS_MESSAGE_HASH',
-        vaue: message.MD5OfBody
+        value: message.MD5OfBody
       })
     })
 
