@@ -13,6 +13,7 @@ var app = Consumer.create({
     console.log("Received", message)
     var jobSpec = JSON.parse(message.Body);
     jobSpec.overrides.containerOverrides.forEach(function(o) {
+      o.environment = o.environment||[];
       o.environment.push({
         name: 'SQS_QUEUE_URL',
         vaue: queueUrl
