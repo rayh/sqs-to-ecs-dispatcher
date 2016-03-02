@@ -19,8 +19,8 @@ var app = Consumer.create({
         value: queueUrl
       })
       o.environment.push({
-        name: 'JOB_SQS_RECEIPT_HANDLE',
-        value: message.ReceiptHandle
+        name: 'JOB_SQS_MESSAGE_ID',
+        value: message.MessageId
       })
       o.environment.push({
         name: 'JOB_SQS_MESSAGE_HASH',
